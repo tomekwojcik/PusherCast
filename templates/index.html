@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />    
+        <link rel="stylesheet" type="text/css" href="{{ static_url('style.css') }}" />
+        <title>PusherCast</title>
+        <script src="http://js.pusherapp.com/1.8/pusher.min.js"></script>
+        <script type="text/javascript" src="{{ static_url('bonzo.min.js') }}"></script>
+        <script type="text/javascript" src="{{ static_url('reqwest.min.js') }}"></script>
+        <script type="text/javascript" src="{{ static_url('Sly-min.js') }}"></script>
+        <script type="text/javascript" src="{{ static_url('events.min.js') }}"></script>
+        <script type="text/javascript" src="{{ static_url('ready.min.js') }}"></script>
+        <script type="text/javascript" src="{{ static_url('pushercast.js') }}"></script>
+        <script type="text/javascript">
+            var PusherKey = '2481e8631047f909e256';
+        </script>
+    </head>
+    <body>
+        <div id="page">
+            <h1>PusherCast</h1>
+            <p id="description">Pusher-driven livecasting</p>
+            <div id="publish">
+                <form>
+                    <p>Publishing as: <span>?</span> <a href="#">change</a></p>
+                    <input name="author" type="hidden" value="?" />
+                    <textarea name="content"></textarea>
+                </form>
+            </div>
+        {% for item in messages %}
+            <div class="message">
+                <p><span class="author">{{ escape(item['author']) }}:</span> {{ escape(item['content']) }}</p>
+                <p class="date">{{ item['created_at'].strftime('%a, %d %b %Y %H:%M:%S') }}</p>
+            </div>                
+        {% end %}
+    </body>
+</html>
