@@ -39,14 +39,12 @@ class AppHandler(tornado.web.RequestHandler):
         message = {
             'author': self.get_argument('author'),
             'content': self.get_argument('content'),
-            'created_at': datetime.now(),
-            # 'ip': None # TODO: Add source IP logging!
+            'created_at': datetime.now()
         }
         self.db.messages.save(message)
         
         pusher.channel_type = pusher.TornadoChannel
         p = pusher.Pusher()
-        #p.callback = self._postCallback
         pusherMessage = {
             'author': escape.xhtml_escape(message['author']),
             'content': escape.xhtml_escape(message['content']),
