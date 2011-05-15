@@ -9,10 +9,11 @@ import logging
 import os
 from optparse import OptionParser
 import pusher
+import config
 
-pusher.app_id = '5520'
-pusher.key = '2481e8631047f909e256'
-pusher.secret = '9d201fcdaf3082b59dd5'
+pusher.app_id = config.PUSHER_APP_ID
+pusher.key = config.PUSHER_KEY
+pusher.secret = config.PUSHER_SECRET
 
 # Handler.
 class AppHandler(tornado.web.RequestHandler):
@@ -22,7 +23,7 @@ class AppHandler(tornado.web.RequestHandler):
         
     def get(self):
         messages = self.db.messages.find().sort([ ('created_at', -1) ]).limit(10)
-        self.render('templates/index.html', messages=messages)
+        self.render('templates/index.html', messages=messages, appKey=config.PUSHER_KEY)
         
     def _postCallback(self, response):
         if self.request.connection.stream.closed():
